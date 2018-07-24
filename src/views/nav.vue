@@ -24,10 +24,7 @@
                 <Icon type="pin"></Icon>
                 标签管理
             </template>
-            <MenuItem name="2-1">另一个自己</MenuItem>
-            <MenuItem name="2-2">虐杀</MenuItem>
-            <MenuItem name="2-3">世界末日</MenuItem>
-            <MenuItem name="2-4">更多+</MenuItem>
+            <MenuItem name="tagManage">所有标签</MenuItem>
         </Submenu>
         <Submenu name="3">
             <template slot="title">
@@ -59,8 +56,6 @@
         methods:{
             routeTo(name){
                 bus.$emit("selectedMenu", name);
-                // this.$emit('selectedItem', name);
-                // this.$router.push("/"+name);
             }
         }
     }

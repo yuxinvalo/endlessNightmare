@@ -11,6 +11,7 @@ Vue.use(VueRouter);
 Vue.use(iView);
 Vue.use(VueResource);
 
+
 // 路由配置
 const RouterConfig = {
     mode: 'history',

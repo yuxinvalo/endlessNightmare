@@ -19,7 +19,6 @@
 </template>
 
 <script>
-    import {dreams} from "./data/dreamsDegree.js";
     import UploadList from "iview/src/components/upload/upload-list";
     import tinyEditor from "./tinyEditor.vue";
 

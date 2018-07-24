@@ -37,7 +37,6 @@
 
 <script>
     import mkd from './markdownEditor.vue';
-
     export default {
         name: "tinyEditor",
         components: {mkd},
@@ -85,21 +84,29 @@
                 var content = document.getElementsByClassName("CodeMirror cm-s-paper CodeMirror-wrap");
                 this.dreamContent = content[0].innerText;
                 if(this.dreamingDate != '' && this.value != '' && this.myDegree != '' && this.myTags != []){
-                    console.log("submit a dream:" + this.value + " | " + this.dreamingDate + " | myDegree: " + this.myDegree + " | myTags: " + this.myTags);
-                    let data = {
+                    console.log("submit a dream:" + this.value + " | " + new Date(this.dreamingDate).toString() + " | myDegree: " + this.myDegree + " | myTags: " + this.myTags);
+                    //I can not send directly a list, so I just stringy it..
+                    var myTags = '';
+                    for(var i =0; i < this.myTags.length; ++i){
+                        myTags += this.myTags[i].replace(/(^\s*)|(\s*$)/g, "");
+                        myTags += ' ';
+                    }
+                    let dataTosend = {
                         "title" : this.value,
-                        "dreamDate" : this.dreamingDate,
+                        "dreamDate" : new Date(this.dreamingDate).toString(),
                         "classification": this.myDegree,
-                        "labels" : this.myTags,
+                        "labels" : myTags,
                         "content" : this.dreamContent
                     };
                     //WC 这里有个BUG，发送服务端的data少了时间是怎么回事？
                     console.log("data is " + JSON.stringify(data));
-                    this.$http.post("http://localhost:3000/addDream", data,{emulateJSON:true}).then(
-                        function (res) {
-                            console.log(" res from server " +res);
-                    }, function (err) {
-                            console.log(err);
+                    this.$http.post("http://localhost:3000/addDream", dataTosend,{emulateJSON:true}).then(res => {
+                        console.log(" message from server : " + res.data.msg);
+                        if(res.data.msg === 'success'){
+                            this.$Message.success('Save dream successfully.');
+                        }
+                    }, error => {
+                        this.$Message.error("Can't save this dream : " + error );
                         });
                 } else {
                     console.log("submit a dream:" + this.value + " | " + this.dreamingDate + " | myDegree: " + this.myDegree + " | myTags: " + this.myTags);
@@ -120,7 +127,15 @@
                 }else{
                     this.myDegree = 'E';
                 }
-            }
+            },
+            // convertDateFromString(dateString) {
+            //     if (dateString) {
+            //         var arr1 = dateString.split(" ");
+            //         var sdate = arr1[0].split('-');
+            //         var date = new Date(sdate[0], sdate[1]-1, sdate[2]);
+            //         return date;
+            //     }
+            // }
         },
     }
 </script>

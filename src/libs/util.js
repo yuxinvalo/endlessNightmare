@@ -6,4 +6,5 @@ util.title = function (title) {
     window.document.title = title;
 };
 
+
 export default util;

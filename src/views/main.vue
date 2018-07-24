@@ -29,6 +29,10 @@
 
     }
 
+    .ivu-tabs-tab{
+        padding: 10px 100px;
+    }
+
 </style>
 <template>
     <div class="main-header">
@@ -37,6 +41,9 @@
         </div>
         <div v-if="selectedMenu==='/'" class="main-content">
             <add-dream></add-dream>
+        </div>
+        <div v-else-if="selectedMenu==='tagManage'" class="main-content-dreamtype">
+            <tags-manage></tags-manage>
         </div>
         <div v-else class="main-content-dreamtype">
             <class-x v-bind:selected="selectedMenu"></class-x>
@@ -52,11 +59,13 @@
     import addDream from './addDream.vue';
     import bus from './bus.js';
     import classX from './dreams/classX.vue';
+    import tagsManage from './dreams/tagsManage.vue';
     export default {
         components: {
             mainTop,
             addDream,
-            classX
+            classX,
+            tagsManage
         },
         data() {
             return{
