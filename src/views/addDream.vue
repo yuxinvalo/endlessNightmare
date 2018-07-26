@@ -15,6 +15,12 @@
                 </div>
             </Panel>
         </Collapse>
+        <Alert type="error" show-icon v-show="ifConnection">
+            An error prompt
+            <span slot="desc">
+            I can't communicate with server, please check the server state.
+        </span>
+        </Alert>
     </div>
 </template>
 
@@ -30,7 +36,8 @@
             return {
                 dreams: '',
                 value1: '0',
-                chosenTag: ''
+                chosenTag: '',
+                ifConnection: false
             }
 
         },
@@ -65,6 +72,7 @@
                 this.dreams = res.data;
                 console.log(res.data);
             }, error => {
+                this.ifConnection = true;
                 console.log(error);
             });
 

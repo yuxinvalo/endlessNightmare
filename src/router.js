@@ -15,6 +15,11 @@ const routers = [
         path: '/classX',
         meta: {title: 'X 类梦境'},
         component: (resolve) => require(['./views/dreams/classX.vue'], resolve)
+    },
+    {
+        path: '/text-editor',
+        meta: {title : 'text editor'},
+        component: (resolve) => require(['./views/dreams/articleEditor.vue'], resolve)
     }
 ];
 export default routers;

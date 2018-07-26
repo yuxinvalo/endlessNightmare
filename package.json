@@ -17,6 +17,7 @@
   "dependencies": {
     "iview": "^2.0.0-rc.8",
     "simplemde": "^1.11.2",
+    "tinymce": "^4.8.0",
     "vue": "^2.2.6",
     "vue-resource": "^1.5.1",
     "vue-router": "^2.2.1"
