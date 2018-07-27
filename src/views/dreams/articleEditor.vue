@@ -30,41 +30,37 @@
             <Tag v-for="tag in labels" :key="tag" :name="tag" closable @on-close="handleClose">{{tag}}</Tag>
         </div>
 
-        //markdown editor
-        <div>
-            <Card shadow>
-                <textarea class='tinymce-textarea' id="tinymceEditer"></textarea>
-            </Card>
-            <!--<Spin fix v-if="spinShow">-->
-                <!--<Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>-->
-                <!--<div>加载组件中...</div>-->
-            <!--</Spin>-->
+        <br/><br/>
+        <div class="ivu-input-wrapper">
+            <Input class="ivu-input" v-model="content" type="textarea" :rows="10"></Input>
         </div>
 
-
-
         <Alert type="error" v-if="showAlert">要写完哟....</Alert>
-        <Button type="success" long @click="submitQuickDream">SUBMIT</Button>
+        <div class="button"><Button type="success" long @click="submitQuickDream">SUBMIT</Button></div>
+
     </div>
 </template>
 
 <script>
-    import tinymce from 'tinymce';
     export default {
-        name: "article",
-        data(){
+        name: "articleEditor",
+        props:{
+            selectedId: {
+                type: String
+            }
+        },
+        data: function(){
             return {
-                title: 'placeholder',
+                title: this.selectedId,
                 classification: 'placeholder',
                 dreamingDate: '',
                 labels: ['placeholder1', 'placeholder2'],
-                content: 'placeholder',
+                content: '',
                 spinShow: true,
                 showAlert: false,
             }
         },
         methods: {
-
             handleClose (event, name) {
                 const index = this.myTags.indexOf(name);
                 this.myTags.splice(index, 1);
@@ -119,57 +115,19 @@
                     this.myDegree = 'E';
                 }
             },
-
-            init () {
-                this.$nextTick(() => {
-                    let vm = this;
-                    let height = document.body.offsetHeight - 300;
-                    tinymce.init({
-                        selector: '#tinymceEditer',
-                        branding: false,
-                        elementpath: false,
-                        height: height,
-                        language: 'zh_CN.GB2312',
-                        menubar: 'edit insert view format table tools',
-                        plugins: [
-                            'advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools',
-                            'searchreplace visualblocks visualchars code fullpage',
-                            'insertdatetime media nonbreaking save table contextmenu directionality',
-                            'emoticons paste textcolor colorpicker textpattern imagetools codesample'
-                        ],
-                        toolbar1: ' newnote print preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample',
-                        autosave_interval: '20s',
-                        image_advtab: true,
-                        table_default_styles: {
-                            width: '100%',
-                            borderCollapse: 'collapse'
-                        },
-                        setup: function (editor) {
-                            editor.on('init', function (e) {
-                                vm.spinShow = false;
-                                if (localStorage.editorContent) {
-                                    tinymce.get('tinymceEditer').setContent(localStorage.editorContent);
-                                }
-                            });
-                            editor.on('keydown', function (e) {
-                                localStorage.editorContent = tinymce.get('tinymceEditer').getContent();
-                            });
-                        }
-                    });
-                });
-            },
         },
-
-        mounted () {
-            this.init();
-        },
-        destroyed () {
-            tinymce.get('tinymceEditer').destroy();
-        },
-
+        mounted(){
+            console.log("from sub component: id " + this.selectedId);
+        }
     }
 </script>
 
 <style lang="less">
- @import '../../styles/loading.less';
+    .ivu-btn-success{
+        margin-top: 200px;
+    }
+    .tiny-editor{
+        margin: 20px;
+    }
+
 </style>

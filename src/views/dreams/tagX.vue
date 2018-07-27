@@ -23,7 +23,7 @@
         name: "TagX",
         props:{
             selected:{
-                type: String
+                type: Object
             }
         },
         data(){

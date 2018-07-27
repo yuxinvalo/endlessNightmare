@@ -31,7 +31,12 @@
     .ivu-modal-content{
         text-align: left;
     }
-
+    .ivu-btn-group{
+        margin-bottom: 60px;
+    }
+    .ivu-form{
+        border-top: gray 1px solid;
+    }
 </style>
 <template>
     <div class="part-article">
@@ -60,14 +65,19 @@
                     <Button type="ghost" @click="deleteArticle(article._id)">Delete</Button>
                 </ButtonGroup>
             </div>
+            <div class="ivu-form">
+                <article-editor v-bind:selectedId="selectedId" v-show="showEditor"></article-editor>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     //import {dreamsArticles} from '../data/dreamsDegree.js';
+    import articleEditor from './articleEditor.vue';
     export default {
         name: "classX",
+        components:{articleEditor},
         props:{
             selected:{
                 type: String
@@ -87,6 +97,8 @@
                 title: '',
                 articles: [],
                 dreamType : this.selected,
+                showEditor: false,
+                selectedId: '',
             }
         },
         created(){
@@ -136,8 +148,14 @@
                 for(var i = 0; i < this.articles.length; ++i){
                     if (id === this.articles[i]._id){
                         article = this.articles[i];
+                        this.articles = [];
+                        this.articles.push(article);
+                        this.selectedId = article._id;
+                        console.log("editedTitle: " + this.selectedId);
                     }
                 }
+                this.showEditor = true;
+                this.selectedId = id;
                 console.log(article);
                 // HOW TO DEFINE EDITOR?
             },
